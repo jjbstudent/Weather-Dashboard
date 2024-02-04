@@ -50,17 +50,9 @@
             <div class="weather-display" id="weather-data"></div>
           </div>
         </section>
-        <section id="5-dayForcast">
-          <h2>5-Day forecast</h2>
-          <div class="card" style="width: 18rem;">
-            <img class='forecastDate'>
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p>Temperature: ${data.main.temp} &deg;C</p>
-              <p>Wind: ${data.wind.speed} m/s</p>
-              <p>Humidity: ${data.main.humidity}%</p>
-            </div>
-          </div>
+        <section id="5-dayForecast">
+          <h2>5-Day Forecast</h2>
+          <div id="forecastCards" class="d-flex flex-wrap"></div>
         </section>
     
       

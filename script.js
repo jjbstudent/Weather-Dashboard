@@ -12,8 +12,69 @@ document.getElementById('search-button').addEventListener('click', function() {
 
   // Call a function to fetch weather data using an API (e.g., OpenWeatherMap)
   getWeatherData(city);
-
+ 
 });
+// Function to fetch and display 5-day forecast for the user input city
+async function fetchAndDisplayForecast(city) {
+  var apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIkey}&units=metric`;
+
+  try {
+    // Fetch data from the OpenWeatherMap API
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    // Reference to the forecast cards container
+    var forecastCardsContainer = document.getElementById('forecastCards');
+
+    // Clear existing content in the container
+    forecastCardsContainer.innerHTML = '';
+
+    // Group the forecast data by date
+    const groupedData = groupBy(data.list, item => item.dt_txt.split(' ')[0]);
+
+    // Loop through the grouped data groupedData is an object with date keys
+    Object.keys(groupedData).slice(0, 5).forEach(date => {
+      // Take the first item of each day for simplicity
+      const dayData = groupedData[date][0];
+
+      // Extract relevant data for each day from apiURL
+      const temp = dayData.main.temp;
+      const windSpeed = dayData.wind.speed;
+      const humidity = dayData.main.humidity;
+
+      // Create a card element
+      var card = document.createElement('div');
+      card.className = 'card m-2';
+      card.style = 'width: 18rem;';
+
+      // Set the card content
+      card.innerHTML = `
+        <div class="card-body">
+          <h5 class="card-title">Date: ${date}</h5>
+          <p>Temperature: ${temp} &deg;C</p>
+          <p>Wind: ${windSpeed} m/s</p>
+          <p>Humidity: ${humidity}%</p>
+        </div>
+      `;
+
+      // Append the card to the forecast container
+      forecastCardsContainer.appendChild(card);
+    });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+// Helper function to group an array by a key function
+function groupBy(array, keyFn) {
+  return array.reduce((result, item) => {
+    const key = keyFn(item);
+    result[key] = result[key] || [];
+    result[key].push(item);
+    return result;
+  }, {});
+}
+
 
 // Function to append a history button
 function appendHistoryButton(city) {
@@ -64,27 +125,36 @@ function displayWeatherData(data) {
   appendHistoryButton(data.name);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   getCurrentLocation()
-    .then(coords => getWeatherDetails(coords.latitude, coords.longitude))
-    .then(weatherData => {
-      // Update the weather-data div with the current location weather data
-      var weatherDataDiv = document.getElementById('weather-data');
-      weatherDataDiv.innerHTML = `
-        <h2>${weatherData.name}, ${weatherData.sys.country}</h2>
-        <p>Date: ${new Date().toLocaleDateString()}</p>
-        <p>Temperature: ${weatherData.main.temp} &deg;C</p>
-        <p>Weather: ${weatherData.weather[0].description}</p>
-        <p>Wind: ${weatherData.wind.speed} m/s</p>
-        <p>Humidity: ${weatherData.main.humidity}%</p>
-      `;
+    .then(coords => {
+      // Fetch and display current weather data
+      getWeatherDetails(coords.latitude, coords.longitude)
+        .then(weatherData => {
+          var weatherDataDiv = document.getElementById('weather-data');
+          weatherDataDiv.innerHTML = `
+            <h2>${weatherData.name}, ${weatherData.sys.country}</h2>
+            <p>Date: ${new Date().toLocaleDateString()}</p>
+            <p>Temperature: ${weatherData.main.temp} &deg;C</p>
+            <p>Weather: ${weatherData.weather[0].description}</p>
+            <p>Wind: ${weatherData.wind.speed} m/s</p>
+            <p>Humidity: ${weatherData.main.humidity}%</p>
+          `;
+
+          // Append a history button for the current location
+          appendHistoryButton(weatherData.name);
+
+          // Fetch and display 5-day forecast for the current location
+          fetchAndDisplayForecast(weatherData.name);
+        })
+        .catch(error => {
+          console.error('Error fetching current weather data:', error);
+        });
     })
     .catch(error => {
-      console.error('Error:', error);
-      // Console any errors related to location access or API errors
+      console.error('Error getting current location:', error);
     });
 });
-
 
 // Function to fetch weather details using OpenWeatherMap API
 function getWeatherDetails(latitude, longitude) {
