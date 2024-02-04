@@ -2,6 +2,7 @@ var APIkey = "792ac91d77f6fa7880c9efaf72a400ed";
 
 // Select the textarea element
 var textarea = document.querySelector('.form-control');
+var historyList = document.getElementById('history');
 
 document.getElementById('search-button').addEventListener('click', function() {
    // Prevent the default form submission behavior
@@ -11,7 +12,23 @@ document.getElementById('search-button').addEventListener('click', function() {
 
   // Call a function to fetch weather data using an API (e.g., OpenWeatherMap)
   getWeatherData(city);
+
 });
+
+// Function to append a history button
+function appendHistoryButton(city) {
+  var button = document.createElement('button');
+  button.className = 'btn btn-secondary';
+  button.type = 'button';
+  button.innerText = city;
+  button.addEventListener('click', function() {
+    // Handle button click (e.g., fetch weather data for the selected city)
+    getWeatherData(city);
+  });
+
+  // Append the button to the history list
+  historyList.appendChild(button);
+}
 
 function getWeatherData(city) {
   var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIkey;
@@ -39,6 +56,22 @@ function displayWeatherData(data) {
     <p>Wind: ${data.wind.speed} m/s</p>
     <p>Humidity: ${data.main.humidity}%</p>
   `;
+  // Append a button to the history list
+  appendHistoryButton(data.name);
+}
+// Function to append a history button
+function appendHistoryButton(city) {
+  var button = document.createElement('button');
+  button.className = 'btn btn-secondary';
+  button.type = 'button';
+  button.innerText = city;
+  button.addEventListener('click', function() {
+    // Handle button click (e.g., fetch weather data for the selected city)
+    getWeatherData(city);
+  });
+
+  // Append the button to the history list
+  historyList.appendChild(button);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
