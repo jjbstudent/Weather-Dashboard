@@ -45,13 +45,14 @@ code .
 ## Usage
 URL :  
 
-Demo
-![Demo Video](/ref/Recording 2024-02-04 165651.mp4)
+Demo Screenshot
 ![Weather Dashboard Screenshot](/ref/Screenshot%202024-02-04%20163940.png)
 
-
-
 ## Credits
+https://openweathermap.org/forecast5
+https://api.jquery.com/
+Course Leader
+Teaching assistants
 
 ## License 
 Uses MIT license
