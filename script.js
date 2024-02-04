@@ -23,6 +23,13 @@ async function fetchAndDisplayForecast(city) {
     const response = await fetch(apiUrl);
     const data = await response.json();
 
+    // Log the weather data to the console
+    console.log('Weather Data:', data);
+    console.log('City:', data.city.name);
+    console.log('Latitude:', data.city.coord.lat);
+    console.log('Longitude:', data.city.coord.lon);
+
+
     // Reference to the forecast cards container
     var forecastCardsContainer = document.getElementById('forecastCards');
 
@@ -45,10 +52,12 @@ async function fetchAndDisplayForecast(city) {
       // Create a card element
       var card = document.createElement('div');
       card.className = 'card m-2';
-      card.style = 'width: 18rem;';
+      card.style = 'width: 12rem;';
+     
 
       // Set the card content
       card.innerHTML = `
+        
         <div class="card-body">
           <h5 class="card-title">Date: ${date}</h5>
           <p>Temperature: ${temp} &deg;C</p>

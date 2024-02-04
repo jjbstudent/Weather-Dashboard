@@ -12,6 +12,23 @@
     margin-bottom: 20px;
   }
 
-  .card-body{
-    background-color: azure;
+  .weather-header {
+    background: linear-gradient(to right, #1e0155, #9442cf); /* Purple gradient */
+  }
+
+  #forecastCards .card {
+    width: 100%; /* Each card takes up 100% of the width on small screens */
+    background:#2a353a;
+    color: white;
+  }
+  
+  @media (min-width: 992px) {
+    #forecastCards .card {
+      width: calc(100% / 5); /* Each card takes up 1/5 of the width on large screens */
+      margin-right: 2%; /* Add margin to separate cards */
+    }
+  
+    #forecastCards .card:last-child {
+      margin-right: 0; /* Remove margin for the last card in the row */
+    }
   }
