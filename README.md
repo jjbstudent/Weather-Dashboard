@@ -36,6 +36,8 @@ SO THAT I can plan a trip accordingly
   * When a user click on a city in the search history they are again presented with current and future conditions for that city
  
 ## installation
+
+Access my repository via link https://github.com/jjbstudent/Weather-Dashboard/tree/main
 ```
 git clone git@github.com:jjbstudent/Weather-Dashboard.git
 code . 
