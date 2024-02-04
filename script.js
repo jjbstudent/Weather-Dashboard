@@ -48,7 +48,7 @@ async function fetchAndDisplayForecast(city) {
       const temp = dayData.main.temp;
       const windSpeed = dayData.wind.speed;
       const humidity = dayData.main.humidity;
-
+    
       // Create a card element
       var card = document.createElement('div');
       card.className = 'card m-2';
@@ -84,7 +84,6 @@ function groupBy(array, keyFn) {
   }, {});
 }
 
-
 // Function to append a history button
 function appendHistoryButton(city) {
   // Reference to the existing div with the ID 'history'
@@ -106,6 +105,7 @@ function appendHistoryButton(city) {
     });
     // Append the button to the existing div with the class 'd-grid gap-2'
     existingDiv.appendChild(button);
+    saveToLocalStorage(city); // Save to local storage
   } else {
     console.log('City already in history!');
   }
@@ -141,6 +141,15 @@ function displayWeatherData(data) {
   `;
   // Append a button to the history list
   appendHistoryButton(data.name);
+}
+// Function to save the city to local storage
+function saveToLocalStorage(city) {
+  // Retrieve existing history or initialize an empty array
+  var history = JSON.parse(localStorage.getItem('weatherHistory')) || [];
+  // Add the new city to the history array
+  history.push(city);
+  // Save the updated history array to local storage
+  localStorage.setItem('weatherHistory', JSON.stringify(history));
 }
 
 document.getElementById('clear-history').addEventListener('click', function () {
@@ -214,10 +223,21 @@ function getCurrentLocation() {
 function clearHistory() {
   // Select the history container
   var historyContainer = document.getElementById('history');
-
   // Clear the content of the history container
   historyContainer.innerHTML = '';
+    // Clear the history in local storage
+    localStorage.removeItem('weatherHistory');
 }
+document.addEventListener('DOMContentLoaded', function () {
+  // Load the history from local storage on page load
+  var historyFromStorage = JSON.parse(localStorage.getItem('weatherHistory')) || [];
+  // Append buttons for each city in the history
+  historyFromStorage.forEach(city => appendHistoryButton(city));
+
+  document.getElementById('clear-history').addEventListener('click', function () {
+    clearHistory();
+  });
+});
 
 
 
