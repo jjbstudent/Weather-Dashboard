@@ -4,10 +4,12 @@ var APIkey = "792ac91d77f6fa7880c9efaf72a400ed";
 var textarea = document.querySelector('.form-control');
 
 document.getElementById('search-button').addEventListener('click', function() {
+   // Prevent the default form submission behavior
+   event.preventDefault();
   // Get the city input by the user
   var city = document.getElementById('search-input').value;
 
-  // Call a function to fetch weather data using an API (e.g., OpenWeatherMap)git 
+  // Call a function to fetch weather data using an API (e.g., OpenWeatherMap)
   getWeatherData(city);
 });
 
@@ -39,6 +41,37 @@ function displayWeatherData(data) {
   `;
 }
 
+// Function to get my current location coordinates using Geolocation API on page load
+document.addEventListener('DOMContentLoaded', function() {
+  getCurrentLocation()
+    .then(coords => getWeatherDetails(coords.latitude, coords.longitude))
+    .then(weatherData => {
+      // Update the textarea with the current location weather data
+      textarea.value = `City: ${weatherData.name}\n` +
+                       `Date: ${new Date().toLocaleDateString()}\n` +
+                       `Temperature: ${weatherData.main.temp}°C\n` +
+                       `Wind: ${weatherData.wind.speed} m/s\n` +
+                       `Humidity: ${weatherData.main.humidity}%`;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Console any errors related to location access or API errors
+    });
+});
+
+// Function to fetch weather details using OpenWeatherMap API
+function getWeatherDetails(latitude, longitude) {
+  const weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIkey}`;
+
+  return fetch(weatherURL)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    });
+}
+
 // Function to get my current location coordinates using Geolocation API
 function getCurrentLocation() {
   return new Promise((resolve, reject) => {
@@ -55,32 +88,3 @@ function getCurrentLocation() {
     );
   });
 }
-
-// Function to fetch weather details using OpenWeatherMap API
-function getWeatherDetails(latitude, longitude) {
-  const weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIkey}`;
-
-  return fetch(weatherURL)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    });
-}
-
-// Fetch current location coordinates and then fetch weather details
-getCurrentLocation()
-  .then(coords => getWeatherDetails(coords.latitude, coords.longitude))
-  .then(weatherData => {
-    // Update my text area 
-    textarea.value = `City: ${weatherData.name}\n` +
-                     `Date: ${new Date().toLocaleDateString()}\n` +
-                     `Temperature: ${weatherData.main.temp}°C\n` +
-                     `Wind: ${weatherData.wind.speed} m/s\n` +
-                     `Humidity: ${weatherData.main.humidity}%`;
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    // console any error is relation to location access or API errors
-  });
