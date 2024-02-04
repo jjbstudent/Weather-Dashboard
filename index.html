@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <header class="container-fluid text-center text-white bg-dark p-2 weather-header">
+  <header class="container-fluid text-center text-white bg-dark p-2 weather-header ">
     <h1>Weather Dashboard</h1>
   </header>
 
@@ -39,6 +39,8 @@
         <div class="list-group d-grid gap-2" id="history"></div>
         <!--moved the buttons in correct colum to be used as history -->
         <div class="d-grid gap-2"> 
+          <!--my history buttons will be displayed here---->
+          <!--append buttons here-->
 
         </div>
       </aside>
@@ -47,12 +49,14 @@
         <section id="forecast" class="row mt-3" role="region" aria-live="polite">
           <!-- Non-editable div for displaying weather data -->
           <div class="col-12">
-            <div class="weather-display" id="weather-data"></div>
+            <div class="weather-display border-3" id="weather-data"></div>
+            <!--append city weather details here-->
           </div>
         </section>
         <section id="5-dayForecast">
           <h2>5-Day Forecast</h2>
-          <div id="forecastCards" class="d-flex flex-wrap"></div>
+          <div id="forecastCards" class='row'></div>
+          <!--append cards for 5-day weather forecast here-->
         </section>
     
       
