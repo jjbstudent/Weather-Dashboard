@@ -43,9 +43,15 @@ git clone git@github.com:jjbstudent/Weather-Dashboard.git
 code . 
 ```
 ## Usage
+URL :  
+
+Demo
+[![Demo Video](/ref/Recording%202024-02-04%20165651.mp4)]
+![Weather Dashboard Screenshot](/ref/Screenshot%202024-02-04%20163940.png)
+
 
 
 ## Credits
 
-## Licence 
-Uses MIT licence
+## License 
+Uses MIT license
