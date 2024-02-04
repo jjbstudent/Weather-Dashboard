@@ -37,10 +37,11 @@ SO THAT I can plan a trip accordingly
  
 ## installation
 ```
-git clone 
-
-
+git clone git@github.com:jjbstudent/Weather-Dashboard.git
+code . 
+```
 ## Usage
+
 
 ## Credits
 
