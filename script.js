@@ -17,6 +17,10 @@ document.getElementById('search-button').addEventListener('click', function() {
 
 // Function to append a history button
 function appendHistoryButton(city) {
+  // Reference to the existing div with the ID 'history'
+  var existingDiv = document.getElementById('history');
+
+  // Create the button element
   var button = document.createElement('button');
   button.className = 'btn btn-secondary';
   button.type = 'button';
@@ -26,8 +30,8 @@ function appendHistoryButton(city) {
     getWeatherData(city);
   });
 
-  // Append the button to the history list
-  historyList.appendChild(button);
+  // Append the button to the existing div with the class 'd-grid gap-2'
+  existingDiv.appendChild(button);
 }
 
 function getWeatherData(city) {
@@ -58,20 +62,6 @@ function displayWeatherData(data) {
   `;
   // Append a button to the history list
   appendHistoryButton(data.name);
-}
-// Function to append a history button
-function appendHistoryButton(city) {
-  var button = document.createElement('button');
-  button.className = 'btn btn-secondary';
-  button.type = 'button';
-  button.innerText = city;
-  button.addEventListener('click', function() {
-    // Handle button click (e.g., fetch weather data for the selected city)
-    getWeatherData(city);
-  });
-
-  // Append the button to the history list
-  historyList.appendChild(button);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
