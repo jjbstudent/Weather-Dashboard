@@ -89,19 +89,26 @@ function groupBy(array, keyFn) {
 function appendHistoryButton(city) {
   // Reference to the existing div with the ID 'history'
   var existingDiv = document.getElementById('history');
-
-  // Create the button element
-  var button = document.createElement('button');
-  button.className = 'btn btn-secondary';
-  button.type = 'button';
-  button.innerText = city;
-  button.addEventListener('click', function() {
-    // Handle button click (e.g., fetch weather data for the selected city)
-    getWeatherData(city);
-  });
-
-  // Append the button to the existing div with the class 'd-grid gap-2'
-  existingDiv.appendChild(button);
+  
+  // Check if a button with the same name already exists
+  var existingButtons = existingDiv.querySelectorAll('button');
+  var isCityAlreadyInHistory = Array.from(existingButtons).some(button => button.innerText === city);
+ 
+  if (!isCityAlreadyInHistory) { // if the city is not already in the history create button
+    // Create the button element
+    var button = document.createElement('button');
+    button.className = 'btn btn-secondary';
+    button.type = 'button';
+    button.innerText = city;
+    button.addEventListener('click', function() {
+      // Handle button click (e.g., fetch weather data for the selected city)
+      getWeatherData(city);
+    });
+    // Append the button to the existing div with the class 'd-grid gap-2'
+    existingDiv.appendChild(button);
+  } else {
+    console.log('City already in history!');
+  }
 }
 
 function getWeatherData(city) {
@@ -113,6 +120,8 @@ function getWeatherData(city) {
     .then(data => {
       // Handle the retrieved weather data
       displayWeatherData(data);
+      // Fetch and display 5-day forecast for the selected city
+      fetchAndDisplayForecast(city);
     })
     .catch(error => {
       console.error('Error fetching weather data:', error);
@@ -133,6 +142,11 @@ function displayWeatherData(data) {
   // Append a button to the history list
   appendHistoryButton(data.name);
 }
+
+document.getElementById('clear-history').addEventListener('click', function () {
+  // Call the clearHistory function when the button is clicked
+  clearHistory();
+});
 
 document.addEventListener('DOMContentLoaded', function () {
   getCurrentLocation()
@@ -162,6 +176,8 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch(error => {
       console.error('Error getting current location:', error);
+
+
     });
 });
 
@@ -194,3 +210,14 @@ function getCurrentLocation() {
     );
   });
 }
+// Function to clear search history
+function clearHistory() {
+  // Select the history container
+  var historyContainer = document.getElementById('history');
+
+  // Clear the content of the history container
+  historyContainer.innerHTML = '';
+}
+
+
+

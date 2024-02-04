@@ -13,12 +13,12 @@
   }
 
   .weather-header {
-    background: linear-gradient(to right, #1e0155, #9442cf); /* Purple gradient */
+    background: linear-gradient(to right, #000000, #0d3a8d); /*  gradient */
   }
 
   #forecastCards .card {
     width: 100%; /* Each card takes up 100% of the width on small screens */
-    background:#2a353a;
+    background: linear-gradient(to right, #07145e, #153366); /*  gradient */
     color: white;
   }
   

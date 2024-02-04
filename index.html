@@ -36,12 +36,13 @@
             <hr class="my-4 w-100">
           </div>
         </form>
-        <div class="list-group d-grid gap-2" id="history"></div>
+        <div class="list-group d-grid gap-2" id="history">
+          <h3>Search History</h3>
+        </div>
         <!--moved the buttons in correct colum to be used as history -->
         <div class="d-grid gap-2"> 
           <!--my history buttons will be displayed here---->
           <!--append buttons here-->
-
         </div>
       </aside>
       <div class="col-lg-9 pb-3">
@@ -57,6 +58,12 @@
           <h2>5-Day Forecast</h2>
           <div id="forecastCards" class='row'></div>
           <!--append cards for 5-day weather forecast here-->
+        </section>
+        <section>
+          <!-- clear history button-->
+          <button type="submit" class="btn btn-primary btn-block col-lg-12 mt-2 align" id="clear-history" aria-label="clear history">
+            Clear History
+          </button>
         </section>
     
       
