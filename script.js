@@ -29,35 +29,39 @@ function getWeatherData(city) {
 }
 
 function displayWeatherData(data) {
-  var weatherDataTextarea = document.getElementById('weather-data');
-
-  // Update the content of the textarea with the weather data
-  weatherDataTextarea.value = `
-    City: ${data.name}
-    Date: ${new Date().toLocaleDateString()}
-    Temperature: ${data.main.temp} °C
-    Wind: ${data.wind.speed} m/s
-    Humidity: ${data.main.humidity}%
+  var weatherDataDiv = document.getElementById('weather-data');
+  // Update the content of the div with the weather data
+  weatherDataDiv.innerHTML = `
+    <h2>${data.name}, ${data.sys.country}</h2>
+    <p>Date: ${new Date().toLocaleDateString()}</p>
+    <p>Temperature: ${data.main.temp} &deg;C</p>
+    <p>Weather: ${data.weather[0].description}</p>
+    <p>Wind: ${data.wind.speed} m/s</p>
+    <p>Humidity: ${data.main.humidity}%</p>
   `;
 }
 
-// Function to get my current location coordinates using Geolocation API on page load
 document.addEventListener('DOMContentLoaded', function() {
   getCurrentLocation()
     .then(coords => getWeatherDetails(coords.latitude, coords.longitude))
     .then(weatherData => {
-      // Update the textarea with the current location weather data
-      textarea.value = `City: ${weatherData.name}\n` +
-                       `Date: ${new Date().toLocaleDateString()}\n` +
-                       `Temperature: ${weatherData.main.temp}°C\n` +
-                       `Wind: ${weatherData.wind.speed} m/s\n` +
-                       `Humidity: ${weatherData.main.humidity}%`;
+      // Update the weather-data div with the current location weather data
+      var weatherDataDiv = document.getElementById('weather-data');
+      weatherDataDiv.innerHTML = `
+        <h2>${weatherData.name}, ${weatherData.sys.country}</h2>
+        <p>Date: ${new Date().toLocaleDateString()}</p>
+        <p>Temperature: ${weatherData.main.temp} &deg;C</p>
+        <p>Weather: ${weatherData.weather[0].description}</p>
+        <p>Wind: ${weatherData.wind.speed} m/s</p>
+        <p>Humidity: ${weatherData.main.humidity}%</p>
+      `;
     })
     .catch(error => {
       console.error('Error:', error);
       // Console any errors related to location access or API errors
     });
 });
+
 
 // Function to fetch weather details using OpenWeatherMap API
 function getWeatherDetails(latitude, longitude) {
