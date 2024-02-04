@@ -28,16 +28,12 @@
               <input class="form-input weather-search" type="text" id="search-input" placeholder="E.g. London, New York, Paris..."
                 aria-labelledby="form-heading" aria-controls="today forecast" style="width: 100%;" /> <!-- Set width to 100% for the input field -->
             </div>
-            
             <!-- Search button / Primary button-->
             <button type="submit" class="btn btn-primary btn-block col-lg-12 mt-2" id="search-button" aria-label="submit search">
               Search
             </button>
-
             <!-- Horizontal line -->
             <hr class="my-4 w-100">
-
-
           </div>
         </form>
         <div class="list-group d-grid gap-2" id="history"></div>
@@ -54,7 +50,19 @@
             <div class="weather-display" id="weather-data"></div>
           </div>
         </section>
-      </div>
+        <section id="5-dayForcast">
+          <h2>5-Day forecast</h2>
+          <div class="card" style="width: 18rem;">
+            <img class='forecastDate'>
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p>Temperature: ${data.main.temp} &deg;C</p>
+              <p>Wind: ${data.wind.speed} m/s</p>
+              <p>Humidity: ${data.main.humidity}%</p>
+            </div>
+          </div>
+        </section>
+    
       
   
   
